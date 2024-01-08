@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -13,12 +14,13 @@ const app = express();
 // Set up mongoose connection
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-const mongoDB =
-  'mongodb+srv://vercel-admin-user:laZEqWgbLOVcBd98@sports-app-db.2z2wtr7.mongodb.net/local_library?retryWrites=true&w=majority';
+const username = process.env.MONGODB_USER;
+const password = process.env.MONGODB_PASS;
+const uri = `mongodb+srv://${username}:${password}@sports-app-db.2z2wtr7.mongodb.net/local_library?retryWrites=true&w=majority`;
 
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(mongoDB);
+  await mongoose.connect(uri);
 }
 
 // view engine setup
